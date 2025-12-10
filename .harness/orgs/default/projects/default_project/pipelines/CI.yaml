@@ -1,0 +1,42 @@
+pipeline:
+  name: CI
+  identifier: CI
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: githubharnessconnector
+        build: <+input>
+  stages:
+    - stage:
+        name: CI
+        identifier: CI
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: VM
+            spec:
+              type: Pool
+              spec:
+                poolName: harness-vm
+                harnessImageConnectorRef: account.harnessImage
+                os: Linux
+          execution:
+            steps:
+              - step:
+                  name: Echo Test
+                  identifier: Echo_Test
+                  type: Run
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "Pipeline CI funcionando correctamente"
