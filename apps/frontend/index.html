@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend GKE/Harness Monorepo</title>
+    <style>body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }</style>
+</head>
+<body>
+    <h1>Frontend (Node/Nginx) - Version: v1.0.0-Frontend</h1>
+    <p>This is the User Interface calling the Backend API.</p>
+    <hr>
+    <h3>Backend Response (Java):</h3>
+    <p id="backend-data">Connecting with the Backend...</p>
+    <script>
+        // Calls the internal Kubernetes Service name and port
+        const backendUrl = 'http://harness-backend-service:8080/api'; 
+
+        fetch(backendUrl)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('backend-data').innerText = data;
+            })
+            .catch(error => {
+                document.getElementById('backend-data').innerText = `ERROR: Could not connect to the Backend at ${backendUrl}. Check internal connectivity.`;
+                console.error('Error fetching backend:', error);
+            });
+    </script>
+</body>
+</html>

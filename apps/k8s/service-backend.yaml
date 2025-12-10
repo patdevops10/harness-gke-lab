@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: harness-backend-service # Crucial name for internal communication
+spec:
+  type: ClusterIP # Only internally accessible
+  selector:
+    app: harness-backend-app
+  ports:
+    - protocol: TCP
+      port: 8080 # Port the frontend calls (http://harness-backend-service:8080)
+      targetPort: 8080 # Container port

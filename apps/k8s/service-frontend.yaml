@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: harness-frontend-service
+spec:
+  type: LoadBalancer # Enables public IP (external access)
+  selector:
+    app: harness-frontend-app
+  ports:
+    - protocol: TCP
+      port: 80 # Service port (external access)
+      targetPort: 80 # Container port (Nginx)
