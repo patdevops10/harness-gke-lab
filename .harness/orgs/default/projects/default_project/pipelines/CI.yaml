@@ -1,0 +1,43 @@
+pipeline:
+  name: CI
+  identifier: CI
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: githubharnessconnector
+        build: <+input>
+  stages:
+    - stage:
+        name: build
+        identifier: build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushGAR
+                  name: BuildAndPushGAR_1
+                  identifier: BuildAndPushGAR_1
+                  spec:
+                    connectorRef: gpcgpconnector
+                    host: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry
+                    projectID: gp-project-480716
+                    imageName: app-test
+                    tags:
+                      - "1"
