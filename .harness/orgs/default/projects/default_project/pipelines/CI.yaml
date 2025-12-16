@@ -3,39 +3,46 @@ pipeline:
   identifier: CI
   projectIdentifier: default_project
   orgIdentifier: default
-  tags: {}
-  properties:
-    ci:
-      codebase:
-        connectorRef: githubharnessconnector
-        build: <+input>
+  codebase:
+    connectorRef: githubharnessconnector
+    repoName: harness-gke-lab
+    build:
+      type: branch
+      spec:
+        branch: dev
   stages:
     - stage:
-        name: CI
-        identifier: CI
-        description: ""
+        name: Build and Push Images
+        identifier: build_push
         type: CI
         spec:
-          cloneCodebase: true
-          caching:
-            enabled: true
-            override: true
-          buildIntelligence:
-            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
           execution:
             steps:
               - step:
-                  name: Echo Test
-                  identifier: Echo_Test
-                  type: Run
+                  type: BuildAndPushDockerRegistry
+                  name: Build Backend Image
+                  identifier: build_backend
                   spec:
-                    shell: Sh
-                    command: |
-                      echo "Pipeline CI funcionando correctamente"
-          platform:
-            os: Linux
-            arch: Arm64
-          runtime:
-            type: Docker
-            spec:
-              harnessImageConnectorRef: account.harnessImage
+                    connectorRef: gcp-artifact-registry
+                    repo: us-central1-docker.pkg.dev/my-project/my-repo/backend
+                    tags:
+                      - <+pipeline.sequenceId>
+                    dockerfile: apps/backend/Dockerfile
+                    context: apps/backend
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: Build Frontend Image
+                  identifier: build_frontend
+                  spec:
+                    connectorRef: gcp-artifact-registry
+                    repo: us-central1-docker.pkg.dev/my-project/my-repo/frontend
+                    tags:
+                      - <+pipeline.sequenceId>
+                    dockerfile: apps/frontend/Dockerfile
+                    context: apps/frontend
