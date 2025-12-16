@@ -11,8 +11,8 @@ pipeline:
         build: <+input>
   stages:
     - stage:
-        name: build
-        identifier: build
+        name: CI
+        identifier: CI
         description: ""
         type: CI
         spec:
@@ -22,22 +22,20 @@ pipeline:
             override: true
           buildIntelligence:
             enabled: true
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Docker
-            spec: {}
           execution:
             steps:
               - step:
-                  type: BuildAndPushGAR
-                  name: BuildAndPushGAR_1
-                  identifier: BuildAndPushGAR_1
+                  name: Echo Test
+                  identifier: Echo_Test
+                  type: Run
                   spec:
-                    connectorRef: gpcgpconnector
-                    host: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry
-                    projectID: gp-project-480716
-                    imageName: app-test
-                    tags:
-                      - "1"
+                    shell: Sh
+                    command: |
+                      echo "Pipeline CI funcionando correctamente"
+          platform:
+            os: Linux
+            arch: Arm64
+          runtime:
+            type: Docker
+            spec:
+              harnessImageConnectorRef: account.harnessImage
