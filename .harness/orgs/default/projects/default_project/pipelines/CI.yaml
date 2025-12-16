@@ -19,6 +19,8 @@ pipeline:
           platform:
             os: Linux
             arch: Amd64
+            delegateSelectors:
+              - docker-delegate
           runtime:
             type: Docker
             spec: {}
