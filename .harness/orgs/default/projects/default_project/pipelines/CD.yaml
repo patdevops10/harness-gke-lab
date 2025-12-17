@@ -11,11 +11,11 @@ pipeline:
         spec:
           deploymentType: Kubernetes
           service:
-            serviceRef: backend_service
+            serviceRef: harness-backend-service
           environment:
-            environmentRef: production
+            environmentRef: dev
             infrastructureDefinitions:
-              - identifier: gke_production
+              - identifier: gke_dev
           execution:
             steps:
               - step:
