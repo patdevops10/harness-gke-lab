@@ -3,19 +3,18 @@ pipeline:
   identifier: CI
   projectIdentifier: default_project
   orgIdentifier: default
+  codebase:
+    connectorRef: githubharnessconnector
+    repoName: harness-gke-lab
+    build:
+      type: branch
+      spec:
+        branch: dev
   stages:
     - stage:
         name: Build and Push Images
         identifier: build_push
         type: CI
-        cloneCodebase: true
-        codebase:
-          connectorRef: githubharnessconnector
-          repoName: harness-gke-lab
-          build:
-            type: branch
-            spec:
-              branch: dev
         spec:
           platform:
             os: Linux
@@ -32,9 +31,7 @@ pipeline:
                   spec:
                     shell: Sh
                     command: |
-                      echo "Workspace work:"
                       pwd
-                      echo "Files:"
                       ls -R
               - step:
                   type: BuildAndPushDockerRegistry
@@ -42,7 +39,7 @@ pipeline:
                   identifier: build_backend
                   spec:
                     connectorRef: gcpharnessregistry
-                    repo: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry/backend
+                    repo: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: apps/backend/Dockerfile
@@ -53,8 +50,10 @@ pipeline:
                   identifier: build_frontend
                   spec:
                     connectorRef: gcpharnessregistry
-                    repo: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry/frontend
+                    repo: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: apps/frontend/Dockerfile
                     context: .
+          cloneCodebase: false
+        description: ""
