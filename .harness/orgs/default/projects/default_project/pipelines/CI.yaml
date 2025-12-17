@@ -25,6 +25,15 @@ pipeline:
           execution:
             steps:
               - step:
+                  type: Run
+                  name: Check Files
+                  identifier: check_files
+                  spec:
+                    shell: Sh
+                    command: |
+                      pwd
+                      ls -R
+              - step:
                   type: BuildAndPushDockerRegistry
                   name: Build Backend Image
                   identifier: build_backend
@@ -34,7 +43,7 @@ pipeline:
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: apps/backend/Dockerfile
-                    context: apps/backend
+                    context: .
               - step:
                   type: BuildAndPushDockerRegistry
                   name: Build Frontend Image
@@ -45,6 +54,6 @@ pipeline:
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: apps/frontend/Dockerfile
-                    context: apps/frontend
+                    context: .
           cloneCodebase: false
         description: ""
