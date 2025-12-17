@@ -55,7 +55,7 @@ pipeline:
                       - <+pipeline.sequenceId>
                     dockerfile: apps/frontend/Dockerfile
                     context: .
-          cloneCodebase: false
+          cloneCodebase: true
         description: ""
   properties:
     ci:
