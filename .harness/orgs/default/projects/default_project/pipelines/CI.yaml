@@ -42,8 +42,8 @@ pipeline:
                     repo: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry
                     tags:
                       - <+pipeline.sequenceId>
-                    dockerfile: apps/backend/Dockerfile
-                    context: .
+                    dockerfile: Dockerfile
+                    context: apps/backend
               - step:
                   type: BuildAndPushDockerRegistry
                   name: Build Frontend Image
@@ -53,8 +53,8 @@ pipeline:
                     repo: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry
                     tags:
                       - <+pipeline.sequenceId>
-                    dockerfile: apps/frontend/Dockerfile
-                    context: .
+                    dockerfile: Dockerfile
+                    context: apps/frontend
           cloneCodebase: true
         description: ""
   properties:
