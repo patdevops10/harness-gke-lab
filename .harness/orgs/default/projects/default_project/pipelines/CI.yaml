@@ -43,7 +43,7 @@ pipeline:
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: Dockerfile
-                    context: apps/backend
+                    context: ./apps/backend
               - step:
                   type: BuildAndPushDockerRegistry
                   name: Build Frontend Image
@@ -54,7 +54,7 @@ pipeline:
                     tags:
                       - <+pipeline.sequenceId>
                     dockerfile: Dockerfile
-                    context: apps/frontend
+                    context: ./apps/frontend
           cloneCodebase: true
         description: ""
   properties:
