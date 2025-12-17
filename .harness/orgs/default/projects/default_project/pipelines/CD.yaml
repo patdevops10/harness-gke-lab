@@ -1,0 +1,40 @@
+pipeline:
+  name: CD
+  identifier: CD
+  projectIdentifier: default_project
+  orgIdentifier: default
+  stages:
+    - stage:
+        name: Deploy to GKE
+        identifier: deploy_gke
+        type: Deployment
+        spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: backend_service
+          environment:
+            environmentRef: production
+            infrastructureDefinitions:
+              - identifier: gke_production
+          execution:
+            steps:
+              - step:
+                  type: K8sRollingDeploy
+                  name: Rolling Deploy
+                  identifier: rolling_deploy
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+            rollbackSteps:
+              - step:
+                  type: K8sRollingRollback
+                  name: Rollback
+                  identifier: rollback
+                  spec:
+                    pruningEnabled: false
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
