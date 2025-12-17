@@ -32,7 +32,7 @@ pipeline:
                   spec:
                     shell: Sh
                     command: |
-                      echo "Workspace:"
+                      echo "Workspace work:"
                       pwd
                       echo "Files:"
                       ls -R
