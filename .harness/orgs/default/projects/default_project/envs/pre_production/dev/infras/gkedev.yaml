@@ -1,0 +1,15 @@
+infrastructureDefinition:
+  name: gke-dev
+  identifier: gkedev
+  orgIdentifier: default
+  projectIdentifier: default_project
+  environmentRef: dev
+  deploymentType: Kubernetes
+  type: KubernetesGcp
+  spec:
+    connectorRef: gpcgpconnector
+    project: gp-project-480716
+    cluster: us-east1-c/harness-gke-max
+    namespace: dev
+    releaseName: release-<+INFRA_KEY_SHORT_ID>
+  allowSimultaneousDeployments: false
