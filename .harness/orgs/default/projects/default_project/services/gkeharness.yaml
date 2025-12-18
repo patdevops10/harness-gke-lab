@@ -1,5 +1,5 @@
 service:
-  name: gke-harness-
+  name: gke-harness-app
   identifier: gkeharness
   orgIdentifier: default
   projectIdentifier: default_project
