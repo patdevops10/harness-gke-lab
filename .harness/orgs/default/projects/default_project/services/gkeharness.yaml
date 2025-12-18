@@ -3,3 +3,25 @@ service:
   identifier: gkeharness
   orgIdentifier: default
   projectIdentifier: default_project
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: k8smanifest
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: githubharnessconnector
+                  gitFetchType: Branch
+                  paths:
+                    - apps/k8s/deployment-backend.yaml
+                    - apps/k8s/deployment-frontend.yaml
+                    - apps/k8s/service-backend.yaml
+                    - apps/k8s/service-frontend.yaml
+                  branch: dev
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+              optionalValuesYaml: false
+    type: Kubernetes
