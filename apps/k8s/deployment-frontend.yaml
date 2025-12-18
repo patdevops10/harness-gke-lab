@@ -17,6 +17,6 @@ spec:
       containers:
       - name: nginx-server
         # 💡 Harness will replace this image URL (frontend)
-        image: <IMAGE_URL> 
+        image: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry/frontend-app:22 
         ports:
         - containerPort: 80

@@ -17,7 +17,7 @@ spec:
       containers:
       - name: java-server
         # 💡 Harness will replace this image URL (backend)
-        image: <IMAGE_URL> 
+        image: us-east1-docker.pkg.dev/gp-project-480716/gp-harness-repository-registry/backend-app:22
         ports:
         - containerPort: 8080
         env:
