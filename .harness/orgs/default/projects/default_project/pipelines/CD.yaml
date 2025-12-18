@@ -11,7 +11,7 @@ pipeline:
         spec:
           deploymentType: Kubernetes
           service:
-            serviceRef: backend_service
+            serviceRef: gke-harness-app
           environment:
             environmentRef: dev
             infrastructureDefinitions:
