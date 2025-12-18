@@ -14,8 +14,10 @@ pipeline:
             serviceRef: gkeharness
           environment:
             environmentRef: dev
+            gitBranch: dev
+            deployToAll: false
             infrastructureDefinitions:
-              - identifier: gke_dev
+              - identifier: gkedev
           execution:
             steps:
               - step:
@@ -38,3 +40,4 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
+        tags: {}
